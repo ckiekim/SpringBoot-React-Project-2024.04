@@ -2,8 +2,10 @@ package com.example.reactProject.controller;
 
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController			// rendering 하지 않고, 데이터를 보내는 컨트롤러 (@ResponseBody 느낌)
 @RequestMapping("/react")
@@ -21,5 +23,18 @@ public class ReactController {
 		jObj.put("uname", "제임스");
 		return jObj.toString();
 	}
-
+	
+	@PostMapping("/form")
+	public String form(String uid, String uname) {
+		System.out.println("uid=" + uid + ", uname=" + uname);
+		return "uid=" + uid + ", uname=" + uname;
+	}
+	
+	@PostMapping("/multi")
+	public String form(String uid, String uname, MultipartFile file) {
+		String msg = "uid=" + uid + ", uname=" + uname + ", fname=" + file.getOriginalFilename();
+		System.out.println(msg);
+		return msg;
+	}
+	
 }

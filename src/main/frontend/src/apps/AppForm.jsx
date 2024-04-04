@@ -1,28 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './App.css';
+import '../App.css';
 
 function App() {
   const [form, setForm] = useState({uid:'', uname:''});
-  const [file, setFile] = useState(null);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
   }
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  }
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('uid', form.uid);
-    formData.append('uname', form.uname);
-    formData.append('file', file);
-    console.log(formData);
-    const axiosConfig = { headers: {"Content-Type": "multipart/form-data", } }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    params.append('uid', form.uid);
+    params.append('uname', form.uname);
+    console.log(params);
     axios
-      .post('/rp/react/multi', formData, axiosConfig)
-      .then((res) => {console.log(res);});
+      .post('/rp/react/form', params)
+      .then(res => {console.log(res);});
   }
   return (
     <div className="App">
@@ -31,8 +25,6 @@ function App() {
         <input type='text' id='uid' name='uid' value={form.uid} onChange={handleChange} /><br />
         <label htmlFor='name'>이름:</label>
         <input type='text' id='uname' name='uname' value={form.uname} onChange={handleChange} /><br />
-        <label htmlFor='file'>파일:</label>
-        <input type='file' id='file' name='file' onChange={handleFileChange} /><br />
         <button>확인</button>
       </form>
     </div>

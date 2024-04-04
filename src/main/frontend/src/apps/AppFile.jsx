@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './App.css';
+import '../App.css';
 
 function App() {
   const [form, setForm] = useState({uid:'', uname:''});
   const [file, setFile] = useState(null);
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   }
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append('uid', form.uid);
     formData.append('uname', form.uname);
